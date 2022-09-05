@@ -17,7 +17,20 @@ namespace ACS.Controllers
             try
             {
                 Operacion objBdd = new Operacion();
+                DataTable resultado = new DataTable();
+                
                 objBdd.getDataSp("");
+
+                foreach (DataRow item in resultado.Rows)
+                {
+                    var usuario = new Usuario
+                    {
+                        id = int.Parse(item["id"].ToString()),
+                        nombre = item["nombre"].ToString(),
+                        password = item["password"].ToString(),
+                        correo = item["correo"].ToString()
+                    };
+                }
             }
             catch (Exception ex)
             {
