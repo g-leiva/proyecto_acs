@@ -21,7 +21,7 @@ namespace ACS.ConexionBDD
             }
             catch (Exception ex)
             {
-                File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
+                //File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
                 return null;
             }
 

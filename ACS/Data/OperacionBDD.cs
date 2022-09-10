@@ -48,13 +48,13 @@ namespace ACS.OperacionBDD
                     this.ObjBDD.Close();
                     return null;
                 }
-                File.AppendAllText(log, "Consulta exitosa");
+                // File.AppendAllText(log, "Consulta exitosa");
             }
             catch (Exception ex)
             {
                 this.ObjBDD.Close();
-                File.WriteAllText("D:/Documentos/prueba.txt", "hola");
-                File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
+                // File.WriteAllText("D:/Documentos/prueba.txt", "hola");
+                // File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
                 return null;
             }
             return resultado;
@@ -85,7 +85,7 @@ namespace ACS.OperacionBDD
             catch (Exception ex)
             {
                 this.ObjBDD.Close();
-                File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
+                // File.AppendAllText(log, string.Concat("Error al abrir la cnexion BDD", ex.ToString()));
                 return -1;
             }
         }
