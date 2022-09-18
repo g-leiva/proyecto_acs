@@ -60,7 +60,7 @@ namespace ACS.OperacionBDD
             return resultado;
         }
 
-        public int updateDataSp(string nombreSP, List<SqlParameter> parametros)
+        public int update_insertDataSp(string nombreSP, List<SqlParameter> parametros)
         {
             int filas = -1;
 

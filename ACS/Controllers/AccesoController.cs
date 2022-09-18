@@ -78,7 +78,7 @@ namespace ACS.Controllers
                             new Liga()
                             {
                                 id = int.Parse(item["LIGA_ID"].ToString()),
-                                tipo_liga = int.Parse(item["TIPO_LIGA"].ToString()),
+                                tipo_liga = item["TIPO_LIGA"].ToString(),
                                 nombre = item["NOMBRE_LIGA"].ToString(),
                                 descripcion = item["DESCRIPCION_LIGA"].ToString(),
                             }
