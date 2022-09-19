@@ -86,6 +86,7 @@ namespace ACS.Controllers
             Liga objLiga = new Liga();
             Operacion objBdd = new Operacion();
             DataTable resultado = new DataTable();
+            DetalleLiga objDetalleLiga = new DetalleLiga();
 
             try
             {
@@ -108,6 +109,61 @@ namespace ACS.Controllers
                             descripcion = item["descripcion"].ToString()
                         };
                     }
+
+                    if (objLiga != null)
+                    {
+                        objDetalleLiga = new DetalleLiga()
+                        {
+                            id = objLiga.id,
+                            tipo_liga = objLiga.tipo_liga,
+                            nombre = objLiga.nombre,
+                            descripcion = objLiga.descripcion,
+                            usuarios = new List<DetalleUsuarios>()
+                            
+                        };
+
+                        resultado.Clear();
+                        parametros.Clear();
+
+                        parametros = new List<SqlParameter>
+                        {
+                            new SqlParameter() { ParameterName= "@id", Value = liga_id, SqlDbType = SqlDbType.Int },
+                        };
+
+                        resultado = objBdd.getDataSp(CONS.Constantes.SP_Obtener_Detalle_Liga, parametros);
+
+                        if (resultado != null)
+                        {
+                            foreach (DataRow item in resultado.Rows)
+                            {
+                                objDetalleLiga.usuarios.Add(
+                                    new DetalleUsuarios()
+                                    {
+                                        id = int.Parse(item["id"].ToString()),
+                                        nombre = item["nombre"].ToString(),
+                                        correo = item["correo"].ToString(),
+                                        rol = item["usuario_rol"].ToString(),
+                                        puntos = int.Parse(item["usuario_puntos"].ToString()),
+                                        posicion = int.Parse(item["posicion"].ToString()),
+                                    }
+                                 );
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var objResponse = new Response()
+                        {
+                            mensaje = CONS.Constantes.LIGAS_No_Existente,
+                            error = CONS.Constantes.ERROR_error
+                        };
+                        return new HttpResponseMessage
+                        {
+                            Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                            StatusCode = HttpStatusCode.OK
+                        };
+                    }
+
                 }
                 else
                 {
@@ -123,7 +179,6 @@ namespace ACS.Controllers
                     };
                 }
 
-                resultado.Clear();
             }
             catch (Exception)
             {
@@ -142,7 +197,7 @@ namespace ACS.Controllers
 
             return new HttpResponseMessage
             {
-                Content = new ObjectContent<Liga>(objLiga, Configuration.Formatters.JsonFormatter),
+                Content = new ObjectContent<DetalleLiga>(objDetalleLiga, Configuration.Formatters.JsonFormatter),
                 StatusCode = HttpStatusCode.OK
             };
         }
@@ -231,6 +286,136 @@ namespace ACS.Controllers
                     };
 
                 filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Actualizar_Liga, parametros);
+
+                if (filas_afectadas < 1)
+                {
+                    objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.ERROR_mensaje,
+                        error = CONS.Constantes.ERROR_error
+                    };
+
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                objResponse = new Response()
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+
+            objResponse = new Response
+            {
+                mensaje = CONS.Constantes.OK_mensaje_POST,
+                error = CONS.Constantes.OK_error_POST
+            };
+
+            return new HttpResponseMessage
+            {
+                Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
+        [Route("api/liga/asignar")]
+        [HttpPost]
+        public HttpResponseMessage asignar(LigaXUsuario ligaxusuario_model)
+        {
+
+            Operacion objBdd = new Operacion();
+            int filas_afectadas = -1;
+            Response objResponse;
+
+            try
+            {
+
+                List<SqlParameter> parametros = new List<SqlParameter>
+                    {
+                        new SqlParameter() { ParameterName= "@usuario_id", Value = ligaxusuario_model.usuario_id, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@usuario_rol", Value = ligaxusuario_model.usuario_rol, SqlDbType = SqlDbType.TinyInt },
+                        new SqlParameter() { ParameterName= "@usuario_puntos", Value = ligaxusuario_model.usuario_puntos, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@liga_id", Value = ligaxusuario_model.liga_id, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@posicion", Value = ligaxusuario_model.posicion, SqlDbType = SqlDbType.Int },
+                    };
+
+                filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Asignar_Liga, parametros);
+
+                if (filas_afectadas < 1)
+                {
+                    objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.ERROR_ASIGNARmensaje,
+                        error = CONS.Constantes.ERROR_ASGINARerror
+                    };
+
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                objResponse = new Response()
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+
+            objResponse = new Response
+            {
+                mensaje = CONS.Constantes.OK_mensaje_POST,
+                error = CONS.Constantes.OK_error_POST
+            };
+
+            return new HttpResponseMessage
+            {
+                Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
+        [Route("api/liga/actualizarAsignacion")]
+        [HttpPut]
+        public HttpResponseMessage actualizar(LigaXUsuario ligaxusuario_model)
+        {
+            Operacion objBdd = new Operacion();
+            int filas_afectadas = -1;
+            Response objResponse;
+
+            try
+            {
+
+                List<SqlParameter> parametros = new List<SqlParameter>
+                    {
+                        new SqlParameter() { ParameterName= "@usuario_id", Value = ligaxusuario_model.usuario_id, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@usuario_puntos", Value = ligaxusuario_model.usuario_puntos, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@liga_id", Value = ligaxusuario_model.liga_id, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@posicion", Value = ligaxusuario_model.posicion, SqlDbType = SqlDbType.Int },
+                   };
+
+                filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Actualizar_Asignacion, parametros);
 
                 if (filas_afectadas < 1)
                 {

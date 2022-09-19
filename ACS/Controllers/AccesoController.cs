@@ -122,5 +122,133 @@ namespace ACS.Controllers
                 StatusCode = HttpStatusCode.OK
             };
         }
+
+        [Route("api/usuario/crear")]
+        [HttpPost]
+        public HttpResponseMessage crear(Usuario usuario_model)
+        {
+
+            Operacion objBdd = new Operacion();
+            int filas_afectadas = -1;
+            Response objResponse;
+
+            try
+            {
+
+                List<SqlParameter> parametros = new List<SqlParameter>
+                    {
+                        new SqlParameter() { ParameterName= "@nombre", Value = usuario_model.nombre, SqlDbType = SqlDbType.VarChar },
+                        new SqlParameter() { ParameterName= "@password", Value = usuario_model.password, SqlDbType = SqlDbType.VarChar },
+                        new SqlParameter() { ParameterName= "@correo", Value = usuario_model.correo, SqlDbType = SqlDbType.VarChar },
+                    };
+
+                filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Crear_Usuario, parametros);
+
+                if (filas_afectadas < 1)
+                {
+                    objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.ERROR_mensaje,
+                        error = CONS.Constantes.ERROR_error
+                    };
+
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                objResponse = new Response()
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+
+            objResponse = new Response
+            {
+                mensaje = CONS.Constantes.OK_mensaje_POST,
+                error = CONS.Constantes.OK_error_POST
+            };
+
+            return new HttpResponseMessage
+            {
+                Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
+        [Route("api/usuario/actualizar")]
+        [HttpPut]
+        public HttpResponseMessage actualizar(Usuario usuario_model)
+        {
+            Operacion objBdd = new Operacion();
+            int filas_afectadas = -1;
+            Response objResponse;
+
+            try
+            {
+
+                List<SqlParameter> parametros = new List<SqlParameter>
+                    {
+                        new SqlParameter() { ParameterName= "@id", Value = usuario_model.id, SqlDbType = SqlDbType.Int },
+                        new SqlParameter() { ParameterName= "@nombre", Value = usuario_model.nombre, SqlDbType = SqlDbType.VarChar },
+                        new SqlParameter() { ParameterName= "@password", Value = usuario_model.password, SqlDbType = SqlDbType.VarChar },
+                        new SqlParameter() { ParameterName= "@correo", Value = usuario_model.correo, SqlDbType = SqlDbType.VarChar },
+                    };
+
+                filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Actualizar_Usuario, parametros);
+
+                if (filas_afectadas < 1)
+                {
+                    objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.ERROR_mensaje,
+                        error = CONS.Constantes.ERROR_error
+                    };
+
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                objResponse = new Response()
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+
+            objResponse = new Response
+            {
+                mensaje = CONS.Constantes.OK_mensaje_POST,
+                error = CONS.Constantes.OK_error_POST
+            };
+
+            return new HttpResponseMessage
+            {
+                Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
     }
 }
