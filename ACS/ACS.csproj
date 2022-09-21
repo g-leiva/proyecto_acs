@@ -127,7 +127,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\EquipoController.cs" />
+    <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\LigaController.cs" />
+    <Compile Include="Controllers\SedeController.cs" />
     <Compile Include="Data\ConexionBDD.cs" />
     <Compile Include="Data\Constantes.cs" />
     <Compile Include="Data\OperacionBDD.cs" />
@@ -135,9 +138,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Autenticacion.cs" />
+    <Compile Include="Models\Equipo.cs" />
+    <Compile Include="Models\Grupo.cs" />
     <Compile Include="Models\Liga.cs" />
     <Compile Include="Models\LigaUsuario.cs" />
+    <Compile Include="Models\Partido.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\Sede.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -152,7 +159,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Equipo\" />
+    <Folder Include="Views\Grupo\" />
+    <Folder Include="Views\Sede\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

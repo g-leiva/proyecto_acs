@@ -22,19 +22,23 @@
         public const string LIGAS_UsuarioSinLigas = "El usuario no pertenece a ninguna Liga";
 
         // Sin ligas existentes
-        public const string LIGAS_No_Existen = "No se ha creado ninguna liga.";
+        public const string LIGAS_No_Existen = "No se ha creado ninguna liga todavía.";
 
         // Liga no existente
         public const string LIGAS_No_Existente = "No se encontró la liga seleccionada";
+
+        // Sin grupos existentes
+        public const string GRUPOS_No_Existen = "No se ha creado ningun grupo todavía.";
+
+
+        // Sin sedes existentes
+        public const string SEDES_No_Existen = "No se ha creado ninguna sede todavía.";
 
         // ============================== Procedimientos - BDD ==============================================
 
         // Usuarios
         public const string SP_Crear_Usuario = "SP_Crear_Usuario";
         public const string SP_Actualizar_Usuario = "SP_Actualizar_Usuario";
-
-
-        // Autenticacion
         public const string SP_AutenticarUsuario = "SP_AutenticarUsuario";
         public const string SP_Ligas_x_Usuario = "SP_Ligas_x_Usuario";
         
@@ -46,6 +50,19 @@
         public const string SP_Asignar_Liga = "SP_Asignar_Liga";
         public const string SP_Obtener_Detalle_Liga = "SP_Obtener_Detalle_Liga";
         public const string SP_Actualizar_Asignacion = "SP_Actualizar_Asignacion";
+
+        // Grupo
+        public const string SP_Obtener_Grupos = "SP_Obtener_Grupos";
+        public const string SP_Crear_Grupo = "SP_Crear_Grupo";
+
+        // Sede
+        // Liga
+        public const string SP_Obtener_Sedes = "SP_Obtener_Sedes";
+        public const string SP_Obtener_Sede = "SP_Obtener_Sede";
+        public const string SP_Obtener_Detalle_Partido = "SP_Obtener_Detalle_Partido";
+        public const string SP_Obtener_Detalle_Equipo = "SP_Obtener_Detalle_Equipo";
+        public const string SP_Crear_Sede = "SP_Crear_Sede";
+        public const string SP_Actualizar_Sede = "SP_Actualizar_Sede";
 
     }
 
