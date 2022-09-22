@@ -12,6 +12,13 @@ namespace ACS.Models
         public string grupo { get; set; }
     }
 
+    public class NEquipo
+    {
+        public int id { get; set; }
+        public string nombre { get; set; }
+        public int grupo { get; set; }
+    }
+
     public class DetalleEquipo
     {
         public string nombre { get; set; }

@@ -34,6 +34,9 @@
         // Sin sedes existentes
         public const string SEDES_No_Existen = "No se ha creado ninguna sede todavía.";
 
+        // Sin equipos existentes
+        public const string EQUIPOS_No_Existen = "No se ha creado ningun equipo todavía.";
+
         // ============================== Procedimientos - BDD ==============================================
 
         // Usuarios
@@ -64,6 +67,9 @@
         public const string SP_Crear_Sede = "SP_Crear_Sede";
         public const string SP_Actualizar_Sede = "SP_Actualizar_Sede";
 
+        public const string SP_Obtener_Equipos = "SP_Obtener_Equipos";
+        public const string SP_Crear_Equipo = "SP_Crear_Equipo";
+        
     }
 
 }

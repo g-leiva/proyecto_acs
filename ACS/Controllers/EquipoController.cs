@@ -1,89 +1,144 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Data;
+using ACS.OperacionBDD;
+using CONS = ACS.Constantes;
+using System.Data.SqlClient;
+using ACS.Models;
 
 namespace ACS.Controllers
 {
-    public class EquipoController : Controller
+    public class EquipoController : ApiController
     {
-        // GET: Equipo
-        public ActionResult Index()
+        [Route("api/equipo/obtener")]
+        [HttpGet]
+        public HttpResponseMessage obtener()
         {
-            return View();
-        }
+            List<Equipo> objEquipos = new List<Equipo>();
+            Operacion objBdd = new Operacion();
+            DataTable resultado = new DataTable();
 
-        // GET: Equipo/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Equipo/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Equipo/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
             try
             {
-                // TODO: Add insert logic here
+                resultado = objBdd.getDataSp(CONS.Constantes.SP_Obtener_Equipos);
 
-                return RedirectToAction("Index");
+                if (resultado != null)
+                {
+                    foreach (DataRow item in resultado.Rows)
+                    {
+                        objEquipos.Add(
+                             new Equipo()
+                             {
+                                 id = int.Parse(item["id"].ToString()),
+                                 nombre = item["nombre"].ToString(),
+                                 grupo = item["grupo"].ToString()
+                             }
+                         );
+                    }
+                }
+                else
+                {
+                    var objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.EQUIPOS_No_Existen,
+                        error = CONS.Constantes.ERROR_error
+                    };
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+
+                resultado.Clear();
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var objResponse = new Response
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
+
             }
-        }
 
-        // GET: Equipo/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            return new HttpResponseMessage
+            {
+                Content = new ObjectContent<List<Equipo>>(objEquipos, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
         }
-
-        // POST: Equipo/Edit/5
+        [Route("api/equipo/crear")]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public HttpResponseMessage crear(NEquipo equipo_model)
         {
+
+            Operacion objBdd = new Operacion();
+            int filas_afectadas = -1;
+            Response objResponse;
+
             try
             {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                List<SqlParameter> parametros = new List<SqlParameter>
+                    {
+                        new SqlParameter() { ParameterName= "@nombre", Value = equipo_model.nombre, SqlDbType = SqlDbType.VarChar },
+                        new SqlParameter() { ParameterName= "@grupo_id", Value = equipo_model.grupo, SqlDbType = SqlDbType.Int }
+                    };
+
+                filas_afectadas = objBdd.update_insertDataSp(CONS.Constantes.SP_Crear_Equipo, parametros);
+
+                if (filas_afectadas < 1)
+                {
+                    objResponse = new Response()
+                    {
+                        mensaje = CONS.Constantes.ERROR_mensaje,
+                        error = CONS.Constantes.ERROR_error
+                    };
+
+                    return new HttpResponseMessage
+                    {
+                        Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                objResponse = new Response()
+                {
+                    mensaje = CONS.Constantes.ERROR_mensaje,
+                    error = CONS.Constantes.ERROR_error
+                };
+
+                return new HttpResponseMessage
+                {
+                    Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                    StatusCode = HttpStatusCode.OK
+                };
             }
-        }
 
-        // GET: Equipo/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Equipo/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            objResponse = new Response
             {
-                // TODO: Add delete logic here
+                mensaje = CONS.Constantes.OK_mensaje_POST,
+                error = CONS.Constantes.OK_error_POST
+            };
 
-                return RedirectToAction("Index");
-            }
-            catch
+            return new HttpResponseMessage
             {
-                return View();
-            }
+                Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                StatusCode = HttpStatusCode.OK
+            };
         }
     }
 }
