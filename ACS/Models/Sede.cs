@@ -23,7 +23,7 @@ namespace ACS.Models
         public string estadio { get; set; }
         public int capacidad { get; set; }
 
-        public List<DetallePartido> partidos { get; set; }
+        public List<PartidosPorSede> partidos { get; set; }
 
     }
 }

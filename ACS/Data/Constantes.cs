@@ -59,7 +59,7 @@
         // Liga
         public const string SP_Obtener_Sedes = "SP_Obtener_Sedes";
         public const string SP_Obtener_Sede = "SP_Obtener_Sede";
-        public const string SP_Obtener_Detalle_Partido = "SP_Obtener_Detalle_Partido";
+        public const string SP_Obtener_Partidos_x_Sede = "SP_Obtener_Partidos_x_Sede";
         public const string SP_Obtener_Detalle_Equipo = "SP_Obtener_Detalle_Equipo";
         public const string SP_Crear_Sede = "SP_Crear_Sede";
         public const string SP_Actualizar_Sede = "SP_Actualizar_Sede";

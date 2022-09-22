@@ -123,7 +123,7 @@ namespace ACS.Controllers
                             ubicacion = objSede.ubicacion,
                             estadio = objSede.estadio,
                             capacidad = objSede.capacidad,
-                            partidos = new List<DetallePartido>()
+                            partidos = new List<PartidosPorSede>()
 
                         };
 
@@ -135,17 +135,46 @@ namespace ACS.Controllers
                             new SqlParameter() { ParameterName= "@id", Value = sede_id, SqlDbType = SqlDbType.Int },
                         };
 
-                        resultado = objBdd.getDataSp(CONS.Constantes.SP_Obtener_Detalle_Partido, parametros);
+                        resultado = objBdd.getDataSp(CONS.Constantes.SP_Obtener_Partidos_x_Sede, parametros);
 
                         if (resultado != null)
                         {
                             foreach (DataRow item in resultado.Rows)
                             {
+                                DataTable equipos = new DataTable();
+                                List<SqlParameter> parametros_equipos = new List<SqlParameter>
+                                {
+                                    new SqlParameter() { ParameterName= "@id", Value = int.Parse(item["id"].ToString()), SqlDbType = SqlDbType.Int },
+                                };
+
+                                equipos = objBdd.getDataSp(CONS.Constantes.SP_Obtener_Detalle_Equipo, parametros_equipos);
+
+                                List<DetalleEquipo> detalleEquipos = new List<DetalleEquipo>();
+
+                                if (equipos != null)
+                                {
+                                    foreach (DataRow equipo in equipos.Rows)
+                                    {
+                                        detalleEquipos.Add(
+                                            new DetalleEquipo
+                                            {
+                                                nombre = equipo["nombre"].ToString(),
+                                                equipo_goles = int.Parse(equipo["equipo_goles"].ToString()),
+                                                grupo = equipo["grupo"].ToString(),
+
+                                            }
+                                        );
+                                    }
+                                }
+
                                 objDetalleSede.partidos.Add(
-                                    new DetallePartido()
+                                    new PartidosPorSede()
                                     {
                                         id = int.Parse(item["id"].ToString()),
-
+                                        hora_inicio = DateTime.Parse(item["hora_inicio"].ToString()),
+                                        hora_fin = DateTime.Parse(item["hora_fin"].ToString()),
+                                        jugado = int.Parse(item["jugado"].ToString()),
+                                        equipos = detalleEquipos
                                     }
                                  );
                             }

@@ -13,13 +13,13 @@ namespace ACS.Models
         public int jugado { get; set; }
     }
 
-    public class DetallePartido
+    public class PartidosPorSede
     {
         public int id { get; set; }
         public DateTime hora_inicio { get; set; }
         public DateTime hora_fin { get; set; }
         public int jugado { get; set; }
-        public List<Equipo> partidos { get; set; }
+        public List<DetalleEquipo> equipos { get; set; }
 
     }
 }
