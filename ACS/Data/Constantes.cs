@@ -37,6 +37,9 @@
         // Sin equipos existentes
         public const string EQUIPOS_No_Existen = "No se ha creado ningun equipo todavía.";
 
+        // Sin equipos existentes
+        public const string PARTIDOS_No_Existen = "No se ha creado ningun partido todavía.";
+
         // ============================== Procedimientos - BDD ==============================================
 
         // Usuarios
@@ -59,7 +62,6 @@
         public const string SP_Crear_Grupo = "SP_Crear_Grupo";
 
         // Sede
-        // Liga
         public const string SP_Obtener_Sedes = "SP_Obtener_Sedes";
         public const string SP_Obtener_Sede = "SP_Obtener_Sede";
         public const string SP_Obtener_Partidos_x_Sede = "SP_Obtener_Partidos_x_Sede";
@@ -67,9 +69,16 @@
         public const string SP_Crear_Sede = "SP_Crear_Sede";
         public const string SP_Actualizar_Sede = "SP_Actualizar_Sede";
 
+        // Equipos
         public const string SP_Obtener_Equipos = "SP_Obtener_Equipos";
         public const string SP_Crear_Equipo = "SP_Crear_Equipo";
-        
+
+        // Partidos
+        public const string SP_Obtener_Partidos = "SP_Obtener_Partidos";
+        public const string SP_Obtener_Partido = "SP_Obtener_Partido";
+        public const string SP_Crear_Partido = "SP_Crear_Partido";
+        public const string SP_Actualizar_Partido = "SP_Actualizar_Partido";
+
     }
 
 }

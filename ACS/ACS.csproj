@@ -130,6 +130,7 @@
     <Compile Include="Controllers\EquipoController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\LigaController.cs" />
+    <Compile Include="Controllers\PartidoController.cs" />
     <Compile Include="Controllers\SedeController.cs" />
     <Compile Include="Data\ConexionBDD.cs" />
     <Compile Include="Data\Constantes.cs" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <Folder Include="Views\Equipo\" />
     <Folder Include="Views\Grupo\" />
+    <Folder Include="Views\Partido\" />
     <Folder Include="Views\Sede\" />
   </ItemGroup>
   <ItemGroup>

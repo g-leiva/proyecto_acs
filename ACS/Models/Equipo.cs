@@ -25,4 +25,10 @@ namespace ACS.Models
         public string grupo { get; set; }
         public int equipo_goles { get; set; }
     }
+
+    public class EXPADetalleEquipo : DetalleEquipo
+    {
+        public int equipo_id { get; set; }
+        public int EXPAID { get; set; }
+    }
 }
