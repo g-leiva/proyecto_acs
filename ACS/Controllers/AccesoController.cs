@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace ACS.Controllers
 {
-    // controlador acceso
+    // controlador acceso a login
     public class AccesoController : ApiController
     {
         [Route("api/autenticar/autenticar")]
