@@ -47,7 +47,7 @@ namespace ACS.Controllers
                 parametros.Clear();
                 resultado.Clear();
 
-                // CONSULTA DE LIGAS DEL USUARIO rama desa
+                // CONSULTA DE LIGAS DEL USUARIO rama desarrollo
                 if (!objAutenticacion.error.ToString().Equals(CONS.Constantes.ERROR_error.ToString()))
                 {
                     parametros = new List<SqlParameter>
