@@ -25,7 +25,7 @@ namespace ACS.Controllers
 
             try
             {
-                // AUTENTICACION DE USUARIO rama desarrollo
+                // AUTENTICACION DE USUARIO rama desarrollo prueba 1
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
                     new SqlParameter() { ParameterName= "@nombre", Value = usuario_model.nombre, SqlDbType = SqlDbType.VarChar },
