@@ -26,6 +26,24 @@ namespace ACS.Controllers
 
             try
             {
+                if (usuario_model != null)
+                {
+                    if (string.IsNullOrEmpty(usuario_model.nombre) || string.IsNullOrEmpty(usuario_model.correo) || string.IsNullOrEmpty(usuario_model.password))
+                    {
+                        var objResponse = new Response
+                        {
+                            mensaje = "Datos de autenticación faltantes, asegurese de llenar todos los espacios",
+                            error = CONS.Constantes.ERROR_error
+                        };
+
+                        return new HttpResponseMessage
+                        {
+                            Content = new ObjectContent<Response>(objResponse, Configuration.Formatters.JsonFormatter),
+                            StatusCode = HttpStatusCode.OK
+                        };
+                    }
+                }
+
                 // AUTENTICACION DE USUARIO
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
@@ -72,7 +90,7 @@ namespace ACS.Controllers
                             StatusCode = HttpStatusCode.OK
                         };
                     }
-
+                    objLigaUsuario.Ligas = new List<Liga>();
                     foreach (DataRow item in resultado.Rows)
                     {
                         objLigaUsuario.Ligas.Add(
@@ -135,6 +153,23 @@ namespace ACS.Controllers
 
             try
             {
+                if (usuario_model != null)
+                {
+                    if (string.IsNullOrEmpty(usuario_model.nombre) || string.IsNullOrEmpty(usuario_model.correo) || string.IsNullOrEmpty(usuario_model.password))
+                    {
+                        var objResponsee = new Response
+                        {
+                            mensaje = "Datos de autenticación faltantes, asegurese de llenar todos los espacios",
+                            error = CONS.Constantes.ERROR_error
+                        };
+
+                        return new HttpResponseMessage
+                        {
+                            Content = new ObjectContent<Response>(objResponsee, Configuration.Formatters.JsonFormatter),
+                            StatusCode = HttpStatusCode.OK
+                        };
+                    }
+                }
 
                 List<SqlParameter> parametros = new List<SqlParameter>
                     {

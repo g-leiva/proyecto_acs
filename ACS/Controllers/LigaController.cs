@@ -213,6 +213,24 @@ namespace ACS.Controllers
 
             try
             {
+                if (liga_model != null)
+                {
+                    if (string.IsNullOrEmpty(liga_model.nombre) || string.IsNullOrEmpty(liga_model.tipo_liga) || string.IsNullOrEmpty(liga_model.descripcion))
+                    {
+                        var objResponsee = new Response
+                        {
+                            mensaje = "Datos de la liga faltantes, asegurese de llenar todos los espacios",
+                            error = CONS.Constantes.ERROR_error
+                        };
+
+                        return new HttpResponseMessage
+                        {
+                            Content = new ObjectContent<Response>(objResponsee, Configuration.Formatters.JsonFormatter),
+                            StatusCode = HttpStatusCode.OK
+                        };
+                    }
+                }
+
 
                 List<SqlParameter> parametros = new List<SqlParameter>
                     {
@@ -276,6 +294,23 @@ namespace ACS.Controllers
 
             try
             {
+                if (liga_model != null)
+                {
+                    if (string.IsNullOrEmpty(liga_model.id.ToString()) || string.IsNullOrEmpty(liga_model.nombre) || string.IsNullOrEmpty(liga_model.tipo_liga) || string.IsNullOrEmpty(liga_model.descripcion))
+                    {
+                        var objResponsee = new Response
+                        {
+                            mensaje = "Datos de la liga faltantes, asegurese de llenar todos los espacios",
+                            error = CONS.Constantes.ERROR_error
+                        };
+
+                        return new HttpResponseMessage
+                        {
+                            Content = new ObjectContent<Response>(objResponsee, Configuration.Formatters.JsonFormatter),
+                            StatusCode = HttpStatusCode.OK
+                        };
+                    }
+                }
 
                 List<SqlParameter> parametros = new List<SqlParameter>
                     {
